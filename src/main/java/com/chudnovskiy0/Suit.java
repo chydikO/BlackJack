@@ -1,0 +1,21 @@
+package com.chudnovskiy0;
+
+/**
+ * Contains the suits of a Card, Names
+ */
+public enum Suit {
+    CLUB("Clubs"),
+    DIAMOND("Diamonds"),
+    HEART("Hearts"),
+    SPADE("Spades");
+
+    String suitName;
+
+    Suit(String suitName) {
+        this.suitName = suitName;
+    }
+
+    public String toString(){
+        return suitName;
+    }
+}
