@@ -4,22 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-/**
- * A deck of cards
- */
-public class Deck {
+public class CardDeck {
+    private ArrayList<Card> deck;
 
-    //the deck of Cards
-    private CardDeck cardDeck;
-
-
-    /**
-     * Create an empty deck of cards
-     */
-    public Deck(){
-        cardDeck = new CardDeck();
+    public CardDeck(){
+        deck = new ArrayList<Card>();
     }
-
 
     /**
      * Create a standard deck of cards
@@ -83,12 +73,12 @@ public class Deck {
      */
     public Card takeCard(){
 
-            //Take a copy of the first card from the deck
-            Card cardToTake = new Card(deck.get(0));
-            //Remove the card from the deck
-            deck.remove(0);
-            //Give the card back
-            return cardToTake;
+        //Take a copy of the first card from the deck
+        Card cardToTake = new Card(deck.get(0));
+        //Remove the card from the deck
+        deck.remove(0);
+        //Give the card back
+        return cardToTake;
 
     }
 
@@ -97,10 +87,10 @@ public class Deck {
      * @return true if the deck still has cards left
      */
     public boolean hasCards(){
-        if (deck.size() > 0) {
+        if (deck.size()>0){
             return true;
         }
-        else {
+        else{
             return false;
         }
     }
@@ -141,5 +131,76 @@ public class Deck {
         System.out.println("Ran out of cards, creating new deck from discard pile & shuffling deck.");
     }
 
+    private class Card implements Comparable<Card>{
 
+        private final Suit suit;
+        private final Rank rank;
+
+        /**
+         *
+         * @param suit  The Suit of the card to be created
+         * @param rank  The Rank of the card to be created
+         */
+        public Card(Suit suit, Rank rank){
+            this.suit = suit;
+            this.rank = rank;
+        }
+
+        /**
+         * Copy constructor
+         * @param card the card being copied
+         */
+        public Card(Card card){
+            this.suit = card.getSuit();
+            this.rank = card.getRank();
+        }
+
+        /**
+         *
+         * @return  The numerical value of the Card
+         */
+        public int getValue(){
+            return rank.rankValue;
+        }
+
+        /**
+         *
+         * @return The suit of the Card.
+         */
+        public Suit getSuit(){
+            return suit;
+        }
+        public Rank getRank(){
+            return rank;
+        }
+
+        /**
+         *
+         * @return The Card as a readable string
+         */
+        public String toString(){
+            return ("["+rank+" of "+ suit + "] ("+this.getValue()+")");
+
+        }
+
+        /**
+         * Compare a card to another card, returning 1 if this is higher, -1 if this is lower, in case we want to sort cards
+         * I didn't talk about this in the tutorial, but left it here, so you can see how it works
+         * @param c the card being compared
+         * @return 1 if greater, -1 if less, 0 if equal
+         */
+        @Override
+        public int compareTo(Card c) {
+            //if this card is greater than the other card
+            if(this.getValue() > c.getValue()){
+                return 1;
+            }
+            else if(this.getValue() < c.getValue()){
+                return -1;
+            }
+            else{
+                return 0;
+            }
+        }
+    }
 }
