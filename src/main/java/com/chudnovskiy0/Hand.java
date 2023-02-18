@@ -10,17 +10,17 @@ import java.util.Collections;
  */
 public class Hand {
 
-    private ArrayList<Card> hand;
+    private ArrayList<CardDeck.Card> hand;
 
     public Hand(){
-        hand = new ArrayList<Card>();
+        hand = new ArrayList<CardDeck.Card>();
     }
 
     /**
      * Take a single card from the top of this deck and add it to the hand, removing it from the previous deck
      * @param deck The deck of cards we're taking from
      */
-    public void takeCardFromDeck(Deck deck){
+    public void takeCardFromDeck(CardDeck deck){
         hand.add(deck.takeCard());
     }
 
@@ -32,7 +32,7 @@ public class Hand {
      *
      * @param discardDeck The deck we're discarding this hand to
      */
-    public void discardHandToDeck(Deck discardDeck){
+    public void discardHandToDeck(CardDeck discardDeck){
 
         //copy cards from hand to discardDeck
         discardDeck.addCards(hand);
@@ -50,7 +50,7 @@ public class Hand {
         //the String we're formatting for output
         String output = "";
         //for each card in the hand
-        for(Card card: hand){
+        for(CardDeck.Card card: hand){
             //add the String version of the card to the output string
             output += card + " - ";
         }
@@ -70,7 +70,7 @@ public class Hand {
         int aceCount = 0;
 
         //For each card in this hand
-        for(Card card: hand){
+        for(CardDeck.Card card: hand){
             //Add the card value to the hand
             value += card.getValue();
             //Count how many aces have been added
@@ -96,7 +96,7 @@ public class Hand {
      * @param idx the index of the card we're getting
      * @return the card we got
      */
-    public Card getCard(int idx){
+    public CardDeck.Card getCard(int idx){
         return hand.get(idx);
     }
 

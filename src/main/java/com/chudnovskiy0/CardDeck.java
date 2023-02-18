@@ -15,8 +15,8 @@ public class CardDeck {
      * Create a standard deck of cards
      * @param makeDeck makes a standard deck of cards if true
      */
-    public Deck(boolean makeDeck){
-        deck = new ArrayList<Card>();
+    public CardDeck(boolean makeDeck){
+        deck = new ArrayList<>();
         if(makeDeck){
             //Go through all the suits
             for(Suit suit : Suit.values()){
@@ -87,10 +87,10 @@ public class CardDeck {
      * @return true if the deck still has cards left
      */
     public boolean hasCards(){
-        if (deck.size()>0){
+        if (deck.size() > 0) {
             return true;
         }
-        else{
+        else {
             return false;
         }
     }
@@ -124,14 +124,14 @@ public class CardDeck {
      * Clear the old deck
      * @param discard - the deck we're getting the cards from
      */
-    public void reloadDeckFromDiscard(Deck discard){
+    public void reloadDeckFromDiscard(CardDeck discard){
         this.addCards(discard.getCards());
         this.shuffle();
         discard.emptyDeck();
         System.out.println("Ran out of cards, creating new deck from discard pile & shuffling deck.");
     }
 
-    private class Card implements Comparable<Card>{
+    public static class Card implements Comparable<Card>{
 
         private final Suit suit;
         private final Rank rank;
@@ -204,3 +204,5 @@ public class CardDeck {
         }
     }
 }
+
+

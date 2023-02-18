@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Game {
 
     //Declare variables needed for Game class
-    private Deck deck, discarded;
+    private CardDeck deck, discarded;
 
     private Dealer dealer;
     private Player player;
@@ -22,9 +22,9 @@ public class Game {
     public Game(){
 
         //Create a new deck with 52 cards
-        deck = new Deck(true);
+        deck = new CardDeck(true);
         //Create a new empty deck
-        discarded = new Deck();
+        discarded = new CardDeck();
 
         //Create the People
         dealer = new Dealer();

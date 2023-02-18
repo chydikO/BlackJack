@@ -47,7 +47,7 @@ public abstract class Person {
      * @param deck - the deck we are drawing from
      * @param discard - the deck we discard cards to, in case we need to reshuffle this when we run out of deck cards
      */
-    public void hit(Deck deck, Deck discard){
+    public void hit(CardDeck deck, CardDeck discard){
 
         //If there's no cards left in the deck
         if (!deck.hasCards()) {

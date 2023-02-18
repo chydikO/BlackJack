@@ -20,7 +20,7 @@ public class Player extends Person {
      * @param deck - deck we are drawing from when we hit
      * @param discard - deck we discard to, in case we need to shuffle and use when deck runs out
      */
-    public void makeDecision(Deck deck, Deck discard) {
+    public void makeDecision(CardDeck deck, CardDeck discard) {
 
         //decision holds their numerical choice
         int  decision = 0;
