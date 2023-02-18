@@ -35,16 +35,11 @@ public class Game {
                 printScore();
             }
         } while (action != 2);
-        System.out.println(((dealer.getScore() > player.getScore()) ?
-                dealer.toString() : player.toString()) + "\t WIN !");
+        printResultGame();
         printScore();
         System.out.println("-= Good Bye =-");
-        return;
     }
 
-    private void printGameInstruction() {
-        System.out.println("Press 1-> continue, 2-> stop game");
-    }
 
     private void startRound() {
         cardDistribution();
@@ -93,7 +88,6 @@ public class Game {
             pushes++;
         }
         discardingCards();
-        return;
     }
 
     private void playerLosses(String string) {
@@ -175,6 +169,22 @@ public class Game {
     private void printScore() {
         System.out.println("Dealer:\t" + dealer.getScore() + " USD");
         System.out.println("Player:\t" + player.getScore() + " USD");
+    }
+
+    private void printResultGame() {
+        StringBuilder result = new StringBuilder();
+        if ((dealer.getScore() > player.getScore())) {
+            result.append(dealer.toString()).append("\t WIN !");
+        } else if (dealer.getScore() == player.getScore()) {
+            result.append("in this game, everyone remained on their own");
+        } else {
+            result.append(player.toString()).append("\t WIN !");
+        }
+        System.out.println(result.toString());
+    }
+
+    private void printGameInstruction() {
+        System.out.println("Press 1-> continue, 2-> stop game");
     }
 
     public static void pause() {
