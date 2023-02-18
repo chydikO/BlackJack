@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\src\main\java\com\chudnovskiy0\CardDeck.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\src\main\java\com\chudnovskiy0\Deck.java">
           <value>
             <Attribute>

@@ -9,7 +9,6 @@ public class Dealer extends Person {
     public void printFirstHand() {
         System.out.println("The dealer's hand looks like this:");
         System.out.println(getHand().getCard(0));
-//        System.out.println("score:\t" + getScore() + " USD.");
         System.out.println("The second card is face down.\n");
     }
 

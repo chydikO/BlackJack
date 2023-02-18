@@ -43,7 +43,7 @@ public class Game {
 
     private void startRound() {
         cardDistribution();
-        dealerShowFirstHend();
+        dealerShowFirstHand();
 
         //Check if dealer has BlackJack to start
         if (isBlackJacOnTheHands()) {
@@ -154,7 +154,7 @@ public class Game {
         dealer.setScore(dealer.getScore() + bet);
     }
 
-    private void dealerShowFirstHend() {
+    private void dealerShowFirstHand() {
         dealer.printFirstHand();
         player.printHand();
     }
@@ -167,18 +167,20 @@ public class Game {
     }
 
     private void printScore() {
-        System.out.println("Dealer:\t" + dealer.getScore() + " USD");
-        System.out.println("Player:\t" + player.getScore() + " USD");
+        final String s = " USD";
+        System.out.println("Dealer:\t" + dealer.getScore() + s);
+        System.out.println("Player:\t" + player.getScore() + s);
     }
 
     private void printResultGame() {
         StringBuilder result = new StringBuilder();
+        final String str = "\t WIN !";
         if ((dealer.getScore() > player.getScore())) {
-            result.append(dealer.toString()).append("\t WIN !");
+            result.append(dealer.toString()).append(str);
         } else if (dealer.getScore() == player.getScore()) {
             result.append("in this game, everyone remained on their own");
         } else {
-            result.append(player.toString()).append("\t WIN !");
+            result.append(player.toString()).append(str);
         }
         System.out.println(result.toString());
     }
