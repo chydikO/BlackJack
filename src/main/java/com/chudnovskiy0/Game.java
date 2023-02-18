@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class Game {
 
     public static final int BET = 100;
-    private final Scanner scanner = new Scanner(System.in);
     private final CardDeck deck;
     private final CardDeck discarded;
 
@@ -28,17 +27,19 @@ public class Game {
         do {
             printWenNewGame();
             printGameInstruction();
-            action = scanner.nextInt();
+            action = Helper.scanner.nextInt();
             if (action == 1) {
                 startRound();
                 if (dealer.getScore() <= 0 || player.getScore() <= 0) {
                     System.out.println("Game stopped....");
                     break;
                 }
+                printScore();
             }
         } while (action != 2);
         System.out.println(((dealer.getScore() > player.getScore()) ?
                 dealer.toString() : player.toString()) + "\t WIN !");
+        printScore();
         System.out.println("-= Good Bye =-");
         return;
     }
@@ -47,20 +48,9 @@ public class Game {
         System.out.println("Press 1-> continue, 2-> stop game");
     }
 
-
     private void startRound() {
-
-        //If this isn't the first round, display the users score and put their cards back in the deck
-/*        if (dealer.getScore() > 0 && player.getScore() > 0) {
-            printWenNewGame();
-            dealer.printHand();
-            player.printHand();
-            dealer.getHand().discardHandToDeck(discarded);
-            player.getHand().discardHandToDeck(discarded);
-        }*/
-
         cardDistribution();
-        showFirstHend();
+        dealerShowFirstHend();
 
         //Check if dealer has BlackJack to start
         if (isBlackJacOnTheHands()) {
@@ -77,8 +67,7 @@ public class Game {
         //pass the decks in case they decide to hit
         player.makeDecision(deck, discarded);
         if (player.hasBlackjack()) {
-            System.out.println("You win.");
-            playerWin();
+            playerWin("You win.");
             discardingCards();
             return;
         }
@@ -96,14 +85,11 @@ public class Game {
 
         //Check who wins and count wins or losses
         if (dealer.getHand().calculatedValue() > 21) {
-            System.out.println("Dealer busts");
-            playerWin();
-        } else if (dealer.getHand().calculatedValue() > player.getHand().calculatedValue()) {
-            System.out.println("You lose.");
-            playerLosses();
+            playerWin("Dealer busts");
+        } else if (dealer.getHand().calculatedValue() > player.getHand().calculatedValue() || dealer.hasBlackjack()) {
+            playerLosses("You lose.");
         } else if (player.getHand().calculatedValue() > dealer.getHand().calculatedValue()) {
-            System.out.println("You win.");
-            playerWin();
+            playerWin("You win.");
         } else {
             System.out.println("Push.");
             pushes++;
@@ -112,20 +98,21 @@ public class Game {
         return;
     }
 
-    private void playerLosses() {
+    private void playerLosses(String string) {
+        System.out.println(string);
         losses++;
         setScoreWenDealerWin(BET);
     }
 
-    private void playerWin() {
+    private void playerWin(String string) {
+        System.out.println(string);
         wins++;
         setScoreWenDealerWin(-BET);
     }
 
     private boolean isPlayerLoss() {
         if (player.getHand().calculatedValue() > 21) {
-            System.out.println("You have gone over 21.");
-            playerLosses();
+            playerLosses("You have gone over 21.");
             discardingCards();
             return true;
         }
@@ -134,8 +121,7 @@ public class Game {
 
     private boolean isPlayerHasBlackjack() {
         if (player.hasBlackjack()) {
-            System.out.println("You have Blackjack! You win!");
-            playerWin();
+            playerWin("You have Blackjack! You win!");
             discardingCards();
             return true;
         }
@@ -149,9 +135,8 @@ public class Game {
                 System.out.println("You both have 21 - Push.");
                 pushes++;
             } else {
-                System.out.println("Dealer has BlackJack. You lose.");
                 dealer.printHand();
-                playerLosses();
+                playerLosses("Dealer has BlackJack. You lose.");
             }
             discardingCards();
             return true;
@@ -177,7 +162,7 @@ public class Game {
         dealer.setScore(dealer.getScore() + bet);
     }
 
-    private void showFirstHend() {
+    private void dealerShowFirstHend() {
         dealer.printFirstHand();
         player.printHand();
     }
@@ -189,12 +174,11 @@ public class Game {
         }
     }
 
-    /**
-     * Pause the game for a short time by putting the thread to sleep
-     * We do this to slow down the game slightly, allowing the user to
-     * read the cards being dealt and see what's going on... instead of getting
-     * a ton of output all at once
-     */
+    private void printScore() {
+        System.out.println("Dealer:\t" + dealer.getScore() + " USD");
+        System.out.println("Player:\t" + player.getScore() + " USD");
+    }
+
     public static void pause() {
         try {
             Thread.sleep(5000);

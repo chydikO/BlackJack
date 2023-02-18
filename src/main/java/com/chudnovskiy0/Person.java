@@ -29,7 +29,7 @@ public abstract class Person {
     public void printHand() {
         System.out.println(name + "'s hand looks like this:");
         System.out.println(hand + " Valued at: " + hand.calculatedValue());
-        System.out.println(score + " USD");
+        //System.out.println(score + " USD");
     }
 
     public void hit(CardDeck deck, CardDeck discard) {
@@ -48,5 +48,10 @@ public abstract class Person {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Person:\t" + name;
     }
 }

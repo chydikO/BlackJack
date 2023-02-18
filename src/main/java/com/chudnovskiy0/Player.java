@@ -1,13 +1,9 @@
 package com.chudnovskiy0;
 
-import java.util.Scanner;
-
 public class Player extends Person {
 
-    private final Scanner input = new Scanner(System.in);
-
     public Player() {
-        super.setName("Player");
+        setName("Player");
     }
 
     /**
@@ -28,7 +24,7 @@ public class Player extends Person {
             //try to get that number
             try {
                 System.out.println("Would you like to: 1-> Hit or 2-> Stand");
-                decision = input.nextInt();
+                decision = Helper.scanner.nextInt();
                 getNum = false;
 
             }
@@ -36,7 +32,7 @@ public class Player extends Person {
             catch (Exception e) {
                 System.out.println("Invalid");
                 //we need to go to the next line of input or this will not work
-                input.next();
+                Helper.scanner.next();
             }
         }
 
