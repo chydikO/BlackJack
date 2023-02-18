@@ -1,7 +1,5 @@
 package com.chudnovskiy0;
 
-import java.util.Scanner;
-
 public class Game {
 
     public static final int BET = 100;

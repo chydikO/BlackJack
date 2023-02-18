@@ -2,7 +2,7 @@ package com.chudnovskiy0;
 
 public abstract class Person {
 
-    private Hand hand;
+    private final Hand hand;
     private String name;
     private int score;
 
@@ -12,12 +12,14 @@ public abstract class Person {
         score = 1000;
     }
 
-    public Hand getHand(){
+    public Hand getHand() {
         return hand;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public int getScore() {
         return score;
     }
@@ -29,7 +31,6 @@ public abstract class Person {
     public void printHand() {
         System.out.println(name + "'s hand looks like this:");
         System.out.println(hand + " Valued at: " + hand.calculatedValue());
-        //System.out.println(score + " USD");
     }
 
     public void hit(CardDeck deck, CardDeck discard) {
@@ -43,11 +44,7 @@ public abstract class Person {
     }
 
     public boolean hasBlackjack() {
-        if (getHand().calculatedValue() == 21) {
-            return true;
-        } else {
-            return false;
-        }
+        return getHand().calculatedValue() == 21;
     }
 
     @Override

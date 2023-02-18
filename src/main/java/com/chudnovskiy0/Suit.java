@@ -1,8 +1,5 @@
 package com.chudnovskiy0;
 
-/**
- * Contains the suits of a Card, Names
- */
 public enum Suit {
     CLUB("Clubs"),
     DIAMOND("Diamonds"),
@@ -15,7 +12,7 @@ public enum Suit {
         this.suitName = suitName;
     }
 
-    public String toString(){
+    public String toString() {
         return suitName;
     }
 }
