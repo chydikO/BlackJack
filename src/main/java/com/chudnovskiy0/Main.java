@@ -28,8 +28,5 @@ public class Main {
 
         //start a new  game of Blackjack
         Game blackjack = new Game();
-
-
-
     }
 }

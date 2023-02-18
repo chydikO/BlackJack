@@ -8,33 +8,21 @@ public class CardDeck {
     private ArrayList<Card> deck;
 
     public CardDeck(){
-        deck = new ArrayList<Card>();
+        deck = new ArrayList<>();
     }
 
-    /**
-     * Create a standard deck of cards
-     * @param makeDeck makes a standard deck of cards if true
-     */
     public CardDeck(boolean makeDeck){
         deck = new ArrayList<>();
-        if(makeDeck){
+        if(makeDeck) {
             //Go through all the suits
-            for(Suit suit : Suit.values()){
+            for(Suit suit : Suit.values()) {
                 //Go through all the ranks
-                for(Rank rank : Rank.values()){
+                for(Rank rank : Rank.values()) {
                     //add a new card containing each iterations suit and rank
                     deck.add(new Card(suit, rank));
                 }
             }
         }
-    }
-
-    /**
-     *
-     * @param card The card being added to this deck
-     */
-    public void addCard(Card card){
-        deck.add(card);
     }
 
     /**
@@ -60,37 +48,20 @@ public class CardDeck {
         return output;
     }
 
-    /**
-     * Shuffle the deck of Cards at random
-     */
     public void shuffle(){
         Collections.shuffle(deck, new Random());
     }
 
-    /**
-     *
-     * @return The card taken from the deck
-     */
     public Card takeCard(){
-
-        //Take a copy of the first card from the deck
         Card cardToTake = new Card(deck.get(0));
-        //Remove the card from the deck
         deck.remove(0);
-        //Give the card back
         return cardToTake;
-
     }
 
-    /**
-     *
-     * @return true if the deck still has cards left
-     */
-    public boolean hasCards(){
+    public boolean hasCards() {
         if (deck.size() > 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -125,40 +96,27 @@ public class CardDeck {
      * @param discard - the deck we're getting the cards from
      */
     public void reloadDeckFromDiscard(CardDeck discard){
-        this.addCards(discard.getCards());
-        this.shuffle();
+        addCards(discard.getCards());
+        shuffle();
         discard.emptyDeck();
         System.out.println("Ran out of cards, creating new deck from discard pile & shuffling deck.");
     }
 
-    public static class Card implements Comparable<Card>{
+    public static class Card implements Comparable<Card> {
 
         private final Suit suit;
         private final Rank rank;
 
-        /**
-         *
-         * @param suit  The Suit of the card to be created
-         * @param rank  The Rank of the card to be created
-         */
-        public Card(Suit suit, Rank rank){
+        public Card(Suit suit, Rank rank) {
             this.suit = suit;
             this.rank = rank;
         }
 
-        /**
-         * Copy constructor
-         * @param card the card being copied
-         */
-        public Card(Card card){
+        public Card(Card card) {
             this.suit = card.getSuit();
             this.rank = card.getRank();
         }
 
-        /**
-         *
-         * @return  The numerical value of the Card
-         */
         public int getValue(){
             return rank.rankValue;
         }

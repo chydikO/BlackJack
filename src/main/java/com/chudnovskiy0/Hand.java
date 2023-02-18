@@ -39,7 +39,6 @@ public class Hand {
 
         //clear the hand
         hand.clear();
-
     }
 
     /**
@@ -74,7 +73,7 @@ public class Hand {
             //Add the card value to the hand
             value += card.getValue();
             //Count how many aces have been added
-            if (card.getValue() == 11){
+            if (card.getValue() == 11) {
                 aceCount ++;
             }
         }
@@ -87,9 +86,7 @@ public class Hand {
             }
         }
         return value;
-
     }
-
 
     /**
      *
@@ -99,7 +96,4 @@ public class Hand {
     public CardDeck.Card getCard(int idx){
         return hand.get(idx);
     }
-
-
-
 }
