@@ -12,6 +12,13 @@ public class Dealer extends Person {
         System.out.println("The second card is face down.\n");
     }
 
-
+    public void dealerMakeDecision(CardDeck deck, CardDeck discarded) {
+        /*do {
+            hit(deck, discarded);
+        } while (getHand().calculatedValue() < 17);*/
+        while (getHand().calculatedValue() < 17 || (getHand().calculatedValue() == 17 && getHand().hasAce())) {
+            hit(deck, discarded);
+        }
+    }
 
 }

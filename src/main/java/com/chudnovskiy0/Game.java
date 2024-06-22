@@ -5,16 +5,20 @@ public class Game {
     public static final int BET = 100;
     private final CardDeck deck;
     private final CardDeck discarded;
+    public static final String SEP = System.getProperty("file.separator");
+    public static final String FILE_DIR = System.getProperty("user.dir") + SEP + "sound";
 
     private final Dealer dealer;
     private final Player player;
     private int wins, losses, pushes;
+    private SoundPlayer soundPlayer;
 
     public Game() {
         deck = new CardDeck(true);
         discarded = new CardDeck();
         dealer = new Dealer();
         player = new Player();
+        soundPlayer = new SoundPlayer();
 
         deck.shuffle();
         game();
@@ -37,7 +41,12 @@ public class Game {
         } while (action != 2);
         printResultGame();
         printScore();
-        System.out.println("-= Good Bye =-");
+        exitGame("-= Good Bye =-");
+    }
+
+    private void exitGame(String message) {
+        soundPlayer.playSound(FILE_DIR + SEP + "konec-igry-mar.mp3");
+        System.out.println(message);
     }
 
 
@@ -45,19 +54,18 @@ public class Game {
         cardDistribution();
         dealerShowFirstHand();
 
-        //Check if dealer has BlackJack to start
+        // Проверка на наличие блэкджека у дилера
         if (isBlackJacOnTheHands()) {
             return;
         }
 
-        //Check if player has blackjack to start
-        //If we got to this point, we already know the dealer didn't have blackjack
+        // Проверка на наличие блэкджека у игрока
+        // если мы здесь, то у диллера нет blackjack
         if (isPlayerHasBlackjack()) {
             return;
         }
 
-        //Let the player decide what to do next
-        //pass the decks in case they decide to hit
+        // Набор карт игроком
         player.makeDecision(deck, discarded);
         if (player.hasBlackjack()) {
             playerWin("You win.");
@@ -65,18 +73,21 @@ public class Game {
             return;
         }
 
-        //Check if they busted
+        // Проверка на проигрыш игрока
         if (isPlayerLoss()) {
             return;
         }
 
-        //Now it's the dealer's turn
+        // Набор карт дилером
         dealer.printHand();
-        while (dealer.getHand().calculatedValue() < 17) {
-            dealer.hit(deck, discarded);
-        }
+        dealer.dealerMakeDecision(deck, discarded);
 
-        //Check who wins and count wins or losses
+        // Проверка на победу или поражение
+        checkWinLoss();
+        discardingCards();
+    }
+
+    private void checkWinLoss() {
         if (dealer.getHand().calculatedValue() > 21) {
             playerWin("Dealer busts");
         } else if (dealer.getHand().calculatedValue() > player.getHand().calculatedValue() || dealer.hasBlackjack()) {
@@ -87,17 +98,18 @@ public class Game {
             System.out.println("Push.");
             pushes++;
         }
-        discardingCards();
     }
 
-    private void playerLosses(String string) {
-        System.out.println(string);
+    private void playerLosses(String message) {
+        System.out.println(message);
+        soundPlayer.playSound(FILE_DIR + SEP + "game-over-mario.mp3");
         losses++;
         setScoreWenDealerWin(BET);
     }
 
-    private void playerWin(String string) {
-        System.out.println(string);
+    private void playerWin(String message) {
+        System.out.println(message);
+        soundPlayer.playSound(FILE_DIR + SEP + "fanfary-pobedy-mar.mp3");
         wins++;
         setScoreWenDealerWin(-BET);
     }
@@ -176,7 +188,7 @@ public class Game {
         StringBuilder result = new StringBuilder();
         final String str = "\t WIN !";
         if ((dealer.getScore() > player.getScore())) {
-            result.append(dealer.toString()).append(str);
+            result.append(dealer).append(str);
         } else if (dealer.getScore() == player.getScore()) {
             result.append("in this game, everyone remained on their own");
         } else {
@@ -196,4 +208,5 @@ public class Game {
             e.printStackTrace();
         }
     }
+
 }

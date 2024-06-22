@@ -1,6 +1,7 @@
 package com.chudnovskiy0;
 
 import java.util.ArrayList;
+import javazoom.jl.player.Player;
 
 public class Hand {
 
@@ -50,5 +51,14 @@ public class Hand {
 
     public CardDeck.Card getCard(int idx) {
         return hand.get(idx);
+    }
+
+    public boolean hasAce() {
+        for (CardDeck.Card card : hand) {
+            if (card.getRank() == Rank.ACE) {
+                return true;
+            }
+        }
+        return false;
     }
 }
