@@ -5,8 +5,7 @@ public class Game {
     public static final int BET = 100;
     private final CardDeck deck;
     private final CardDeck discarded;
-    public static final String SEP = System.getProperty("file.separator");
-    public static final String FILE_DIR = System.getProperty("user.dir") + SEP + "sound";
+
 
     private final Dealer dealer;
     private final Player player;
@@ -45,7 +44,7 @@ public class Game {
     }
 
     private void exitGame(String message) {
-        soundPlayer.playSound(FILE_DIR + SEP + "konec-igry-mar.mp3");
+        soundPlayer.playSound("konec-igry-mar.mp3");
         System.out.println(message);
     }
 
@@ -102,14 +101,14 @@ public class Game {
 
     private void playerLosses(String message) {
         System.out.println(message);
-        soundPlayer.playSound(FILE_DIR + SEP + "game-over-mario.mp3");
+        soundPlayer.playSound("game-over-mario.mp3");
         losses++;
         setScoreWenDealerWin(BET);
     }
 
     private void playerWin(String message) {
         System.out.println(message);
-        soundPlayer.playSound(FILE_DIR + SEP + "fanfary-pobedy-mar.mp3");
+        soundPlayer.playSound("fanfary-pobedy-mar.mp3");
         wins++;
         setScoreWenDealerWin(-BET);
     }

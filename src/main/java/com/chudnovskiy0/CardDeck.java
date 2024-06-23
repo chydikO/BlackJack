@@ -95,7 +95,7 @@ public class CardDeck {
         }
 
         public String toString(){
-            return ("["+rank+" of "+ suit + "] ("+this.getValue()+")");
+            return ("["+rank+" of "+ suit + "] ("+ this.getValue() +")");
 
         }
 
