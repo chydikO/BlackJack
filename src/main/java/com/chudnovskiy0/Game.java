@@ -13,7 +13,8 @@ public class Game {
     private final Player player;
     private int wins, losses, pushes;
     private SoundPlayer soundPlayer;
-    private int currentBet = 100;
+    private int currentBet = 50;
+    int currentBetBeforeRound;
 
     public Game() {
         deck = new CardDeck(true);
@@ -27,24 +28,27 @@ public class Game {
     }
 
     private void game() {
-        int action;
-
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         // Запуск таймера каждые 2 минуты
         executor.scheduleAtFixedRate(this::increaseBet, 0, 2, TimeUnit.MINUTES);
 
+        int action;
         do {
             printWenNewGame();
             printGameInstruction();
 
             action = Helper.scanner.nextInt();
             if (action == 1) {
+                currentBetBeforeRound = currentBet; // Сохранение текущего значения currentBet перед началом раунда
                 startRound();
                 if (dealer.getScore() <= 0 || player.getScore() <= 0) {
                     System.out.println("Game stopped....");
                     break;
                 }
                 printScore();
+                if (currentBetBeforeRound != currentBet) {
+                    currentBetBeforeRound = currentBet; // Обновление currentBetBeforeRound, если currentBet изменилось во время раунда
+                }
             }
         } while (action != 2);
 
@@ -116,14 +120,14 @@ public class Game {
         System.out.println(message);
         soundPlayer.playSound("game-over-mario.mp3");
         losses++;
-        setScoreWenDealerWin(currentBet);
+        setScoreWenDealerWin(currentBetBeforeRound);
     }
 
     private void playerWin(String message) {
         System.out.println(message);
         soundPlayer.playSound("fanfary-pobedy-mar.mp3");
         wins++;
-        setScoreWenDealerWin(-currentBet);
+        setScoreWenDealerWin(-currentBetBeforeRound);
     }
 
     private boolean isPlayerLoss() {
@@ -204,9 +208,9 @@ public class Game {
         } else if (dealer.getScore() == player.getScore()) {
             result.append("in this game, everyone remained on their own");
         } else {
-            result.append(player.toString()).append(str);
+            result.append(player).append(str);
         }
-        System.out.println(result.toString());
+        System.out.println(result);
     }
 
     private void printGameInstruction() {
