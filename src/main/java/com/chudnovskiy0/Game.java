@@ -2,17 +2,19 @@ package com.chudnovskiy0;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class Game {
+    private static final Logger logger = Logger.getLogger(Game.class.getName());
 
     private final CardDeck deck;
     private final CardDeck discarded;
-
-
     private final Dealer dealer;
     private final Player player;
     private int wins, losses, pushes;
-    private SoundPlayer soundPlayer;
+    private final SoundPlayer soundPlayer;
     private int currentBet = 50;
     int currentBetBeforeRound;
 
@@ -221,8 +223,8 @@ public class Game {
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            logger.log(Level.SEVERE, "An error occurred while pausing the thread", e);
+            Thread.currentThread().interrupt();        }
     }
 
     private void increaseBet() {
