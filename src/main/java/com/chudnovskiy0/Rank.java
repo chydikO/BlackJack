@@ -4,6 +4,9 @@ package com.chudnovskiy0;
  * Contains the Ranks of Cards, Names, and Values
  */
 public enum Rank {
+    /**
+     * Перечисление Rank. Представляет ранги карт в игре. Каждый ранг имеет свое имя и значение.
+     */
     ACE("Ace", 11),
     TWO("Two", 2),
     THREE("Three", 3),
@@ -18,15 +21,30 @@ public enum Rank {
     QUEEN("Queen",10),
     KING("King",10);
 
+    /**
+     * Поле rankName типа String. Хранит имя ранга карты.
+     */
     String rankName;
+
+    /**
+     * Поле rankValue типа int. Хранит числовое значение ранга карты.
+     */
     int rankValue;
 
-    //constructor for Enum, each Rank has a name and a value
+    /**
+     * Конструктор перечисления Rank. Инициализирует поля rankName и rankValue с заданными значениями.
+     * @param rankName
+     * @param rankValue
+     */
     Rank(String rankName, int rankValue){
         this.rankName = rankName;
         this.rankValue = rankValue;
     }
 
+    /**
+     * Возвращает строковое представление ранга карты.
+     * @return
+     */
     public String toString(){
         return rankName;
     }

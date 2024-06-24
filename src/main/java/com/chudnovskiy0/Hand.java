@@ -1,105 +1,96 @@
 package com.chudnovskiy0;
 
-import com.sun.source.tree.PackageTree;
-
 import java.util.ArrayList;
-import java.util.Collections;
 
-/**
- * A hand of cards to play with
- */
 public class Hand {
+    /**
+     * Приватное поле hand типа ArrayList<CardDeck.Card>. Хранит список карт в руке.
+     */
+    private final ArrayList<CardDeck.Card> hand;
 
-    private ArrayList<Card> hand;
-
-    public Hand(){
-        hand = new ArrayList<Card>();
+    /**
+     * Конструктор класса Hand. Создает пустую руку.
+     */
+    public Hand() {
+        hand = new ArrayList<>();
     }
 
     /**
-     * Take a single card from the top of this deck and add it to the hand, removing it from the previous deck
-     * @param deck The deck of cards we're taking from
+     * Берет карту из колоды deck и добавляет ее в руку игроку или дилеру.
+     * @param deck
      */
-    public void takeCardFromDeck(Deck deck){
+    public void takeCardFromDeck(CardDeck deck) {
         hand.add(deck.takeCard());
     }
 
     /**
-     * Add a single card to this hand
-     * @param c The card being added
+     * Отбрасывает карты из руки игрока или дилера в колоду с отбоем discardDeck
+     * и очищает карты, которые находились в руке.
+     * @param discardDeck
      */
-    /**
-     *
-     * @param discardDeck The deck we're discarding this hand to
-     */
-    public void discardHandToDeck(Deck discardDeck){
-
-        //copy cards from hand to discardDeck
+    public void discardHandToDeck(CardDeck discardDeck) {
         discardDeck.addCards(hand);
-
-        //clear the hand
         hand.clear();
-
     }
 
     /**
-     *
-     * @return The hand with all its cards in a single line String
+     * Возвращает строковое представление руки, перечисляя карты через дефис.
+     * @return
      */
-    public String toString(){
-        //the String we're formatting for output
-        String output = "";
-        //for each card in the hand
-        for(Card card: hand){
-            //add the String version of the card to the output string
-            output += card + " - ";
+    public String toString() {
+        StringBuilder output = new StringBuilder();
+        for (CardDeck.Card card : hand) {
+            output.append(card).append(" - ");
         }
-        //return the formatted string
-        return output;
+        return output.toString();
     }
 
-
     /**
-     *
-     * @return The calculated numerical value of the hand as an integer
+     * Вычисляет сумму очков руки. Сначала суммирует значения всех карт в руке. Затем, если сумма превышает 21 и в
+     * руке есть тузы, уменьшает значение каждого туза на 10, пока сумма не станет меньше или равной 21.
+     * @return
      */
-    public int calculatedValue(){
-
-        //variable to count number of aces, and current total value
+    public int calculatedValue() {
         int value = 0;
         int aceCount = 0;
 
-        //For each card in this hand
-        for(Card card: hand){
-            //Add the card value to the hand
+        for (CardDeck.Card card : hand) {
             value += card.getValue();
-            //Count how many aces have been added
-            if (card.getValue() == 11){
-                aceCount ++;
+            if (card.getValue() == 11) {
+                aceCount++;
             }
         }
-        //if we have a scenario where we have multiple aces, as may be the case of drawing 10, followed by two or more aces, (10+11+1 > 21)
-        //go back and set each ace to 1 until get back under 21, if possible
-        if (value > 21 && aceCount > 0){
-            while(aceCount > 0 && value > 21){
-                aceCount --;
+// Если у нас такая ситуация, когда у нас есть несколько тузов, например, если мы получили 10, а затем два или больше
+// тузов, (10+11+1 > 21), то мы вернемся назад и установим каждый туз в 1, пока не получим сумму меньше 21,
+// если это возможно.
+        if (value > 21 && aceCount > 0) {
+            while (aceCount > 0 && value > 21) {
+                aceCount--;
                 value -= 10;
             }
         }
         return value;
-
     }
-
 
     /**
      *
-     * @param idx the index of the card we're getting
-     * @return the card we got
+     * @param idx
+     * @return Возвращает карту из руки по указанному индексу idx.
      */
-    public Card getCard(int idx){
+    public CardDeck.Card getCard(int idx) {
         return hand.get(idx);
     }
 
-
-
+    /**
+     * Проверяет, есть ли в руке туз. Возвращает true, если в руке есть туз, иначе возвращает false.
+     * @return
+     */
+    public boolean hasAce() {
+        for (CardDeck.Card card : hand) {
+            if (card.getRank() == Rank.ACE) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
