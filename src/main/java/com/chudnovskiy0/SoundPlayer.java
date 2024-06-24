@@ -25,11 +25,6 @@ public class SoundPlayer {
     private static final Logger logger = LoggerFactory.getLogger(Game.class);
 
     /**
-     * Приватное поле player типа Player. Хранит объект Player, который проигрывает звуковой файл.
-     */
-    private Player player;
-
-    /**
      * Проигрывает звуковой файл. Принимает имя звукового файла в качестве параметра.
      * Открывает файловый поток для указанного файла, создает объект Player и проигрывает звуковой файл.
      * В случае возникновения ошибки, логирует ошибку.
@@ -38,7 +33,10 @@ public class SoundPlayer {
     public void playSound(String soundFile) {
         try {
             FileInputStream fis = new FileInputStream(FILE_DIR + SEP + soundFile);
-            player = new Player(fis);
+            /**
+             * Приватное поле player типа Player. Хранит объект Player, который проигрывает звуковой файл.
+             */
+            Player player = new Player(fis);
             player.play();
         } catch (FileNotFoundException | JavaLayerException e) {
             logger.error("An error occurred while playing the sound file", e);

@@ -77,7 +77,7 @@ public class CardDeck {
      * @return
      */
     public boolean hasCards() {
-        return deck.size() > 0;
+        return !deck.isEmpty();
     }
 
     /**
