@@ -2,10 +2,22 @@ package com.chudnovskiy0;
 
 public class Player extends Person {
 
+    /**
+     * Конструктор класса Player. Создает новый объект игрока и устанавливает имя игрока как "Player".
+     */
     public Player() {
         setName("Player");
     }
 
+    /**
+     * Позволяет игроку принять решение о действии в игре.
+     * Запрашивает у игрока ввод: 1 для "Hit" (взять карту) или 2 для "Stand" (остаться).
+     * Если игрок выбирает "Hit", вызывается метод hit() для взятия карты из колоды.
+     * Продолжает запрашивать ввод, пока игрок не выберет "Stand" или сумма очков его руки не превысит 20.
+     * Затем выводит сообщение, что игрок останавливается.
+     * @param deck
+     * @param discard
+     */
     public void makeDecision(CardDeck deck, CardDeck discard) {
         int decision = 0;
 
