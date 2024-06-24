@@ -1,8 +1,10 @@
 package com.chudnovskiy0;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Game {
 
-    public static final int BET = 100;
     private final CardDeck deck;
     private final CardDeck discarded;
 
@@ -11,6 +13,7 @@ public class Game {
     private final Player player;
     private int wins, losses, pushes;
     private SoundPlayer soundPlayer;
+    private int currentBet = 100;
 
     public Game() {
         deck = new CardDeck(true);
@@ -25,9 +28,15 @@ public class Game {
 
     private void game() {
         int action;
+
+        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        // Запуск таймера каждые 2 минуты
+        executor.scheduleAtFixedRate(this::increaseBet, 0, 2, TimeUnit.MINUTES);
+
         do {
             printWenNewGame();
             printGameInstruction();
+
             action = Helper.scanner.nextInt();
             if (action == 1) {
                 startRound();
@@ -38,6 +47,10 @@ public class Game {
                 printScore();
             }
         } while (action != 2);
+
+        // Отмена таймера после завершения игры
+        executor.shutdown();
+
         printResultGame();
         printScore();
         exitGame("-= Good Bye =-");
@@ -103,14 +116,14 @@ public class Game {
         System.out.println(message);
         soundPlayer.playSound("game-over-mario.mp3");
         losses++;
-        setScoreWenDealerWin(BET);
+        setScoreWenDealerWin(currentBet);
     }
 
     private void playerWin(String message) {
         System.out.println(message);
         soundPlayer.playSound("fanfary-pobedy-mar.mp3");
         wins++;
-        setScoreWenDealerWin(-BET);
+        setScoreWenDealerWin(-currentBet);
     }
 
     private boolean isPlayerLoss() {
@@ -206,6 +219,11 @@ public class Game {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private void increaseBet() {
+        currentBet += 50;
+        System.out.println("Bet increased to: " + currentBet);
     }
 
 }
